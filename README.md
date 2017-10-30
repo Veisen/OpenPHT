@@ -4,7 +4,7 @@ LibreELEC is a 'Just enough OS' Linux distribution for running the award-winning
 
 **Compile**
 
-1st  DISTRO=OpenPHT PROJECT=S905 ARCH=arm make tools/download-tool
+1st  DISTRO=OpenPHT PROJECT=S905 ARCH=arm tools/download-tool
 
 2nd  DISTRO=OpenPHT PROJECT=S905 ARCH=arm make image
 
