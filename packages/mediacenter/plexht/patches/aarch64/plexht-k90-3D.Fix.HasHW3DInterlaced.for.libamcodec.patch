@@ -1,0 +1,19 @@
+commit 0359e62fff9294692d1840dee152a4caf1d3bdab
+Author: Jamie Coldhill <wrxtasy@amnet.net.au>
+Date:   Thu Jun 2 02:35:03 2016 +0800
+
+    3D: Fix for Linux AML HasHW3DInterlaced
+
+diff --git a/xbmc/utils/SystemInfo.cpp b/xbmc/utils/SystemInfo.cpp
+index 92657d7..642032b 100644
+--- a/xbmc/utils/SystemInfo.cpp
++++ b/xbmc/utils/SystemInfo.cpp
+@@ -864,7 +864,7 @@ bool CSysInfo::IsAeroDisabled()
+ 
+ bool CSysInfo::HasHW3DInterlaced()
+ {
+-#if defined(TARGET_ANDROID)
++#if defined(HAS_LIBAMCODEC)
+   if (aml_hw3d_present())
+     return true;
+ #endif

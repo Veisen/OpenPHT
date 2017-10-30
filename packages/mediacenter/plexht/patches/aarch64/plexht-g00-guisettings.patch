@@ -1,0 +1,28 @@
+diff --git a/plex/Owned/GUISettings.cpp b/plex/Owned/GUISettings.cpp
+index 1da6984..ae9fda3 100644
+--- a/plex/Owned/GUISettings.cpp
++++ b/plex/Owned/GUISettings.cpp
+@@ -398,7 +398,11 @@ void CGUISettings::Initialize()
+   streamsilence.insert(make_pair(13551, 0));
+   for (int seconds = 1; seconds <= 10; seconds++)
+     streamsilence.insert(make_pair(38500 + seconds, seconds));
++#ifdef TARGET_AML
++  AddInt(ao, "audiooutput.streamsilence", 421, 0, streamsilence, SPIN_CONTROL_TEXT);
++#else
+   AddInt(ao, "audiooutput.streamsilence", 421, 1, streamsilence, SPIN_CONTROL_TEXT);
++#endif
+ 
+   AddBool(ao, "audiooutput.supportdtshdcpudecoding", 38019, false);
+ 
+@@ -874,7 +882,11 @@ void CGUISettings::Initialize()
+   adjustTypes.insert(make_pair(351, ADJUST_REFRESHRATE_OFF));
+   adjustTypes.insert(make_pair(36035, ADJUST_REFRESHRATE_ALWAYS));
+   adjustTypes.insert(make_pair(36036, ADJUST_REFRESHRATE_ON_STARTSTOP));
++#ifdef TARGET_AML
++  AddInt(adv, "videoplayer.adjustrefreshrate", 170, ADJUST_REFRESHRATE_ON_STARTSTOP, adjustTypes, SPIN_CONTROL_TEXT);
++#else
+   AddInt(adv, "videoplayer.adjustrefreshrate", 170, ADJUST_REFRESHRATE_OFF, adjustTypes, SPIN_CONTROL_TEXT);
++#endif
+   AddInt(adv, "videoplayer.pauseafterrefreshchange", 13550, 0, 0, 1, MAXREFRESHCHANGEDELAY, SPIN_CONTROL_TEXT);
+ 
+ #ifdef TARGET_RASPBERRY_PI

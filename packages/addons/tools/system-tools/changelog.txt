@@ -1,0 +1,22 @@
+107
+- Bump p7zip and unrar
+
+106
+- Bump screen, fix colors issue
+
+104
+- Bump file package
+
+103
+- Add nmon
+
+102
+- Add inotify-tools, mc
+
+101
+- mrxvt can be started from KODI
+- correct mrxvt terminal type
+- make hddtemp work
+
+100
+- Initial Release

@@ -1,0 +1,33 @@
+
+distro_image_name() {
+  if [ -f $BUILD/BUILD_OPENPHT ]; then
+    . $BUILD/BUILD_OPENPHT
+  fi
+  if [ -n "$OPENPHT_VERSION" ]; then
+    CUSTOM_VERSION=$OPENPHT_VERSION
+    if [ -z "$DEVICE" ]; then
+      CUSTOM_IMAGE_NAME="$DISTRONAME-$OPENPHT_VERSION-$PROJECT.$TARGET_ARCH"
+    else
+      CUSTOM_IMAGE_NAME="$DISTRONAME-$OPENPHT_VERSION-$DEVICE.$TARGET_ARCH"
+    fi
+  fi
+}
+
+show_distro_config() {
+  distro_image_name
+
+  config_message="$config_message\n\n OpenPHT configuration:"
+  config_message="$config_message\n $dashes$dashes"
+
+  config_message="$config_message\n - OpenPHT branch:\t\t\t $OPENPHT_BRANCH"
+  config_message="$config_message\n - OpenPHT repository:\t\t\t $OPENPHT_REPO"
+  config_message="$config_message\n - OpenPHT-Settings repository:\t\t $OPENPHT_SETTINGS_REPO"
+  config_message="$config_message\n - OpenPHT gitrev:\t\t\t $OPENPHT_GITREV"
+  config_message="$config_message\n - OpenPHT version:\t\t\t $OPENPHT_VERSION"
+
+  config_message="$config_message\n\n Image configuration:"
+  config_message="$config_message\n $dashes$dashes"
+
+  config_message="$config_message\n - Image version:\t\t\t $CUSTOM_VERSION"
+  config_message="$config_message\n - Image name:\t\t\t\t $CUSTOM_IMAGE_NAME"
+}

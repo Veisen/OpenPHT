@@ -1,0 +1,44 @@
+From e2561d2ce73bee3758b45fbea1eb9029ea70c6b5 Mon Sep 17 00:00:00 2001
+From: "Chris \"Koying\" Browet" <cbro@semperpax.com>
+Date: Thu, 14 May 2015 19:30:07 +0200
+Subject: [PATCH] FIX: [aml] show video sooner (fixes MVC)
+
+---
+ xbmc/cores/dvdplayer/DVDCodecs/Video/AMLCodec.cpp | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
+
+diff --git a/xbmc/cores/dvdplayer/DVDCodecs/Video/AMLCodec.cpp b/xbmc/cores/dvdplayer/DVDCodecs/Video/AMLCodec.cpp
+index e0c107f..7ade231 100644
+--- a/xbmc/cores/dvdplayer/DVDCodecs/Video/AMLCodec.cpp
++++ b/xbmc/cores/dvdplayer/DVDCodecs/Video/AMLCodec.cpp
+@@ -1649,6 +1649,7 @@ bool CAMLCodec::OpenDecoder(CDVDStreamInfo &hints)
+   // vcodec is open, update speed if it was
+   // changed before dvdplayer called OpenDecoder.
+   SetSpeed(m_speed);
++  ShowMainVideo(true);
+ 
+   return true;
+ }
+@@ -2199,11 +2200,7 @@ void CAMLCodec::SetVideoRect(const CRect &SrcRect, const CRect &DestRect)
+   }
+ 
+   if (!update)
+-  {
+-    // mainvideo 'should' be showing already if we get here, make sure.
+-    ShowMainVideo(true);
+     return;
+-  }
+ 
+   CRect gui, display;
+   gui = CRect(0, 0, CDisplaySettings::GetInstance().GetCurrentResolutionInfo().iWidth, CDisplaySettings::GetInstance().GetCurrentResolutionInfo().iHeight);
+@@ -2302,10 +2299,6 @@ void CAMLCodec::SetVideoRect(const CRect &SrcRect, const CRect &DestRect)
+   SysfsUtils::SetString("/sys/class/video/axis", video_axis);
+   // make sure we are in 'full stretch' so we can stretch
+   SysfsUtils::SetInt("/sys/class/video/screen_mode", 1);
+-
+-  // we only get called once gui has changed to something
+-  // that would show video playback, so show it.
+-  ShowMainVideo(true);
+ }
+ 
+ void CAMLCodec::RenderUpdateCallBack(const void *ctx, const CRect &SrcRect, const CRect &DestRect)

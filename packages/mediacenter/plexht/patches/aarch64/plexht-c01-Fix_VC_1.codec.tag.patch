@@ -1,0 +1,19 @@
+commit af1a99dd696debf368547ce15c072c51b9ab11b3
+Author: Jamie Coldhill <wrxtasy@amnet.net.au>
+Date:   Thu Apr 28 18:49:49 2016 +0800
+
+    Type lower case d should be used to define codec to correspond with libamcodec define
+
+diff --git a/xbmc/cores/dvdplayer/DVDCodecs/Video/AMLCodec.cpp b/xbmc/cores/dvdplayer/DVDCodecs/Video/AMLCodec.cpp
+index 7236444..1db29cd 100644
+--- a/xbmc/cores/dvdplayer/DVDCodecs/Video/AMLCodec.cpp
++++ b/xbmc/cores/dvdplayer/DVDCodecs/Video/AMLCodec.cpp
+@@ -249,7 +249,7 @@ public:
+ #define SYNC_OUTSIDE    (2)
+ 
+ // missing tags
+-#define CODEC_TAG_VC_1  (0x312D4356)
++#define CODEC_TAG_VC_1  (0x312d4356)
+ #define CODEC_TAG_RV30  (0x30335652)
+ #define CODEC_TAG_RV40  (0x30345652)
+ #define CODEC_TAG_MJPEG (0x47504a4d)

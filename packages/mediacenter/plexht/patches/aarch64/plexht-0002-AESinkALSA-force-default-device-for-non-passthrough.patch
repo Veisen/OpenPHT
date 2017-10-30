@@ -1,0 +1,51 @@
+From 6c7d75b24fc37e0a42b97df92e4c211682ea59e6 Mon Sep 17 00:00:00 2001
+From: Jonas Karlman <jonas@kwiboo.se>
+Date: Fri, 7 Oct 2016 13:42:10 +0200
+Subject: [PATCH] AESinkALSA: force default device for non-passthrough
+
+---
+ xbmc/cores/AudioEngine/Sinks/AESinkALSA.cpp | 30 ++---------------------------
+ 1 file changed, 2 insertions(+), 28 deletions(-)
+
+diff --git a/xbmc/cores/AudioEngine/Sinks/AESinkALSA.cpp b/xbmc/cores/AudioEngine/Sinks/AESinkALSA.cpp
+index 819a49a..b747da8 100644
+--- a/xbmc/cores/AudioEngine/Sinks/AESinkALSA.cpp
++++ b/xbmc/cores/AudioEngine/Sinks/AESinkALSA.cpp
+@@ -525,35 +525,9 @@ bool CAESinkALSA::Initialize(AEAudioFormat &format, std::string &device)
+     m_passthrough   = false;
+   }
+ #if defined(HAS_LIBAMCODEC)
+-  if (aml_present())
++  if (!m_passthrough && device.find("hdmi:CARD=AMLM8AUDIO") != std::string::npos)
+   {
+-    int aml_digital_codec = 0;
+-    switch(format.m_dataFormat)
+-    {
+-      case AE_FMT_AC3:
+-        aml_digital_codec = 2;
+-        break;
+-
+-      case AE_FMT_DTS:
+-        aml_digital_codec = 3;
+-        break;
+-
+-      case AE_FMT_EAC3:
+-        aml_digital_codec = 4;
+-        inconfig.sampleRate = 48000;
+-        break;
+-
+-      case AE_FMT_DTSHD:
+-        aml_digital_codec = 8;
+-        break;
+-
+-      case AE_FMT_TRUEHD:
+-        aml_digital_codec = 7;
+-        break;
+-    }
+-
+-    aml_set_audio_passthrough(m_passthrough);
+-    SysfsUtils::SetInt("/sys/class/audiodsp/digital_codec", aml_digital_codec);
++    device = "default";
+   }
+ #endif
+ 

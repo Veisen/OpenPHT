@@ -1,0 +1,63 @@
+From 211edfa19b20820772b33f6042992811037a21b3 Mon Sep 17 00:00:00 2001
+From: Jamie Coldhill <wrxtasy@amnet.net.au>
+Date: Thu, 6 Oct 2016 17:54:40 +0800
+Subject: [PATCH] [aml] Scale video axis correctly when 1080p to 2160p switching
+ Fixup 720p60hz fallback resolution 
+
+---
+ xbmc/cores/dvdplayer/DVDCodecs/Video/AMLCodec.cpp | 10 +++++++++-
+ xbmc/cores/dvdplayer/DVDCodecs/Video/AMLCodec.h   |  1 +
+ xbmc/windowing/egl/EGLNativeTypeAmlogic.cpp       |  2 +-
+ 3 files changed, 11 insertions(+), 2 deletions(-)
+
+diff --git a/xbmc/cores/dvdplayer/DVDCodecs/Video/AMLCodec.cpp b/xbmc/cores/dvdplayer/DVDCodecs/Video/AMLCodec.cpp
+index c8163a0..1cd1da0 100644
+--- a/xbmc/cores/dvdplayer/DVDCodecs/Video/AMLCodec.cpp
++++ b/xbmc/cores/dvdplayer/DVDCodecs/Video/AMLCodec.cpp
+@@ -2194,6 +2194,13 @@ void CAMLCodec::SetVideoRect(const CRect &SrcRect, const CRect &DestRect)
+     update = true;
+   }
+ 
++  int video_res = (int)g_graphicsContext.GetVideoResolution();
++  if (m_video_res != video_res)
++  {
++    m_video_res = video_res;
++    update = true;
++  }
++
+   if (!update)
+   {
+     // mainvideo 'should' be showing already if we get here, make sure.
+@@ -2207,7 +2214,8 @@ void CAMLCodec::SetVideoRect(const CRect &SrcRect, const CRect &DestRect)
+ #ifdef TARGET_ANDROID
+   display = m_display_rect;
+ #else
+-  display = gui;
++  const RESOLUTION_INFO& video_res_info = g_settings.m_ResInfo[video_res];
++  display = m_display_rect = CRect(0, 0, video_res_info.iScreenWidth, video_res_info.iScreenHeight);
+ #endif
+   if (gui != display)
+   {
+diff --git a/xbmc/cores/dvdplayer/DVDCodecs/Video/AMLCodec.h b/xbmc/cores/dvdplayer/DVDCodecs/Video/AMLCodec.h
+index 3aa025d..760edcc 100644
+--- a/xbmc/cores/dvdplayer/DVDCodecs/Video/AMLCodec.h
++++ b/xbmc/cores/dvdplayer/DVDCodecs/Video/AMLCodec.h
+@@ -89,4 +89,5 @@ private:
+   float            m_zoom;
+   int              m_contrast;
+   int              m_brightness;
++  int              m_video_res;
+ };
+diff --git a/xbmc/windowing/egl/EGLNativeTypeAmlogic.cpp b/xbmc/windowing/egl/EGLNativeTypeAmlogic.cpp
+index 535732b..2081813 100644
+--- a/xbmc/windowing/egl/EGLNativeTypeAmlogic.cpp
++++ b/xbmc/windowing/egl/EGLNativeTypeAmlogic.cpp
+@@ -172,7 +172,7 @@ bool CEGLNativeTypeAmlogic::GetPreferredResolution(RESOLUTION_INFO *res) const
+   if (!GetNativeResolution(res))
+   {
+     // punt to 720p if we get nothing
+-    aml_mode_to_resolution("720p", res);
++    aml_mode_to_resolution("720p60hz", res);
+   }
+ 
+   return true;

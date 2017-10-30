@@ -1,0 +1,8 @@
+102
+- update mpd to 0.20.3
+
+101
+- rebuild for libogg
+
+100
+- initial LibreELEC version

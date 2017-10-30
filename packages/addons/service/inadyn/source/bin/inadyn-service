@@ -1,0 +1,42 @@
+#!/bin/sh
+################################################################################
+#      This file is part of LibreELEC - https://libreelec.tv
+#      Copyright (C) 2016 Team LibreELEC
+#
+#  LibreELEC is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  LibreELEC is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
+################################################################################
+
+. /etc/profile
+oe_setup_addon service.system.inadyn
+
+if [ "$inadyn_S" == "inadyn.conf" ]; then
+    config="$ADDON_HOME/inadyn.conf"
+else
+    config="$ADDON_HOME/inadyn.temp"
+    if [ -z "$inadyn_a" -o -z "$inadyn_p" -o -z "$inadyn_u" ]; then
+        rm -fr "$config"
+    else
+        echo "\
+provider $inadyn_S {
+   ssl      = $inadyn_s
+   username = $inadyn_u
+   password = $inadyn_p
+   hostname = $inadyn_a
+}" > "$config"
+    fi
+fi
+
+if [ -f "$config" ]; then
+    inadyn -f "$config" -l info
+fi

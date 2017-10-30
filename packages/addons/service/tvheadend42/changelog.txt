@@ -1,0 +1,45 @@
+111
+- update to Tvheadend 4.2.2-32
+
+110
+- added tv_grab_file support for compressed files (gz bz2 xz)
+- update to Tvheadend 4.2.1.7
+- fix FRITZ!Box support, AVM Repeater and 6490 are now working
+
+109
+- added custom start options to addon
+- added FRITZ!Box Sat>IP server support to addon
+- update to Tvheadend 4.1.2415
+- fix debug if activated but nothing selected
+
+108
+- added CA (libdvben50221) support
+- update to Tvheadend 4.1.2401
+
+107
+- rebuild due ssl change
+
+106
+- update to Tvheadend 4.1.2309
+- service gets restarted at changes in add-on settings
+- improved Tvh defaults
+
+105
+- update to Tvheadend 4.1.2236
+- fixes picons download from Tvh server
+- fixes empty/incomplete frequency scan-tables
+
+104
+- update to Tvheadend 4.1.2195
+- added TRACE debug option at the addon config
+
+103
+- update to Tvheadend 4.1.2134
+
+102
+- update for LibreELEC 8.0
+- update to Tvheadend 4.1.1945
+- fix the XMLTV import script
+
+100
+- initial LibreELEC version

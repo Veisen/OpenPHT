@@ -1,0 +1,14 @@
+105
+- update moonlight-embedded to support GFE 3.2
+
+104
+- update moonlight-common-c to support GFE 3.2
+
+103
+- update Moonlight to 2.2.2
+
+102
+- update Moonlight to 2.2.1
+
+101
+- initial addon

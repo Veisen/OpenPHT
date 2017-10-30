@@ -1,0 +1,21 @@
+commit af59dd7657118ef332e9e02722b6eff88d7e7645
+Author: Jamie Coldhill <wrxtasy@amnet.net.au>
+Date:   Thu Jun 2 02:49:03 2016 +0800
+
+    3D: Forgotten Includes and further de-androidification
+
+diff --git a/xbmc/utils/SystemInfo.cpp b/xbmc/utils/SystemInfo.cpp
+index 642032b..f0859bb 100644
+--- a/xbmc/utils/SystemInfo.cpp
++++ b/xbmc/utils/SystemInfo.cpp
+@@ -53,10 +53,7 @@
+ #include "powermanagement/PowerManager.h"
+ #include "utils/StringUtils.h"
+ #include "utils/XMLUtils.h"
+-#if defined(TARGET_ANDROID)
+-#include "android/jni/Build.h"
+ #include "utils/AMLUtils.h"
+-#endif
+ 
+ /* Platform identification */
+ #if defined(TARGET_DARWIN)

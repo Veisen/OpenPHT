@@ -1,0 +1,32 @@
+From 2b119395dafc0ef9781cff8959e9bff11f67db65 Mon Sep 17 00:00:00 2001
+From: "Chris \"Koying\" Browet" <cbro@semperpax.com>
+Date: Sat, 30 Jan 2016 14:37:59 +0100
+Subject: [PATCH] FIX: [dvdaudio] remove non-functional PTS adjustment
+
+---
+ xbmc/cores/dvdplayer/DVDAudio.cpp | 13 -------------
+ 1 file changed, 13 deletions(-)
+
+diff --git a/xbmc/cores/dvdplayer/DVDAudio.cpp b/xbmc/cores/dvdplayer/DVDAudio.cpp
+index c317c18..1ac9114 100644
+--- a/xbmc/cores/dvdplayer/DVDAudio.cpp
++++ b/xbmc/cores/dvdplayer/DVDAudio.cpp
+@@ -276,18 +276,5 @@ double CDVDAudio::GetPlayingPts()
+ {
+   if (m_playingPts == DVD_NOPTS_VALUE)
+     return 0.0;
+-
+-  double now = CDVDClock::GetAbsoluteClock();
+-  double diff = now - m_timeOfPts;
+-  double cache = GetCacheTime();
+-  double played = 0.0;
+-
+-  if (diff < cache)
+-    played = diff;
+-  else
+-    played = cache;
+-
+-  m_timeOfPts = now;
+-  m_playingPts += played;
+   return m_playingPts;
+ }

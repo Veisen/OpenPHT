@@ -1,0 +1,26 @@
+From dc8ab8e2ffde9af98931c57b68ca82b4d2eb8cc9 Mon Sep 17 00:00:00 2001
+From: Trent Nelson <trent.a.b.nelson@gmail.com>
+Date: Tue, 11 Mar 2014 17:22:39 -0600
+Subject: [PATCH] Fixes mode being set every frame.
+
+---
+ xbmc/utils/AMLUtils.cpp | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/xbmc/utils/AMLUtils.cpp b/xbmc/utils/AMLUtils.cpp
+index 2e876d8..c6999ac 100644
+--- a/xbmc/utils/AMLUtils.cpp
++++ b/xbmc/utils/AMLUtils.cpp
+@@ -137,11 +137,9 @@ void aml_set_stereo_mode(const int mode, const int view)
+   if (last_mode == mode)
+     return;
+ 
++  last_mode = mode;
+   if (!aml_supports_stereo(mode))
+-  {
+-    last_mode = mode;
+     return;
+-  }
+ 
+   switch(mode)
+   {

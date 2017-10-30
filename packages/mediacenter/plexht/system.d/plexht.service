@@ -1,0 +1,32 @@
+[Unit]
+Description=OpenPHT
+After=network-online.target graphical.target
+Requires=graphical.target
+Wants=network-online.target
+
+[Service]
+Environment=__GL_YIELD=USLEEP
+Environment=DISPLAY=:0.0
+Environment=SDL_MOUSE_RELATIVE=0
+Environment=HOME=/storage
+Environment=XBMC_USER_HOME=/storage/.plexht
+Environment=XBMC_TEMP=/storage/.plexht/temp
+Environment=XBMC_BIN_HOME=/usr/lib/plexht
+Environment=XBMC_HOME=/usr/share/XBMC
+EnvironmentFile=-/run/libreelec/plexht.conf
+EnvironmentFile=-/run/libreelec/debug/plexht.conf
+ExecStartPre=-/usr/lib/plexht/plexht-config
+ExecStart=/bin/sh -c ". /etc/profile; exec /usr/lib/plexht/plexhometheater --standalone -fs $PLEXHT_ARGS $PLEXHT_DEBUG"
+# keep KillMode=process unless there is no good reason to switch to cgroup
+KillMode=process
+TimeoutStopSec=5
+Restart=always
+RestartSec=2
+RestartPreventExitStatus=64 66
+StartLimitInterval=0
+LimitNOFILE=16384
+
+[Install]
+Alias=kodi.service
+Alias=xbmc.service
+WantedBy=plexht.target

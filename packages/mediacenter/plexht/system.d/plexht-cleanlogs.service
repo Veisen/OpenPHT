@@ -1,0 +1,13 @@
+[Unit]
+Description=OpenPHT clean debug logs
+ConditionKernelCommandLine=!debugging
+ConditionPathExists=!/storage/.cache/debug.libreelec
+Before=plexht.service
+
+[Service]
+Type=oneshot
+ExecStart=-/bin/sh -c 'rm -rf /storage/.plexht/userdata/addon_data/*/*.log /storage/.plexht/userdata/addon_data/*/log/*'
+RemainAfterExit=yes
+
+[Install]
+WantedBy=plexht.service
